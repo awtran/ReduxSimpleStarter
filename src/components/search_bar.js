@@ -2,25 +2,33 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const Input = styled.input`
-  border-radius: 3px;
+  border-radius: 6px;
   padding: 0.25em 0.5em;
-  margin-top: 1rem;
+  margin: 1rem 0rem 1rem 0rem;
   background: rgba(255,255,255,0.2);
   color: white;
   border: 2px solid white;
 `;
 
 class SearchBar extends Component {
+  // construtor method
   constructor(props) {
     super(props);
 
-    this.state = { term: '' };
+    // initializing the state of the component (ONLY PLACE TO DO THIS)
+    this.state = { term: 'squishymuffinz' };
   }
 
   // render the content as a component instance (to be exported)
   render () {
-    // onChange event: the prop is the value of user's input
-    return <Input onChange={event => console.log(event.target.value)} />;
+    // setState informs React that you've changed the state of the object
+    return (
+      <div>
+        <Input 
+          value = {this.state.term}
+          onChange={event => this.setState({ term: event.target.value })} />
+      </div>
+    );
   }
 }
 
