@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import YTSearch from 'youtube-api-search';
 const API_KEY = 'AIzaSyB0QCJ8Xxma86Un5qN0jDm5FvmeFhQ7ev4';
 
-// our homemade components 
+// our homemade components
 import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
 import VideoDetail from './components/video_detail';
@@ -31,13 +31,17 @@ class App extends Component {
     super(props);
 
     // initially creates the state as an empty array
-    this.state = { videos: [] };
+    this.state = {
+      videos: [],
+      selectedVideo: null
+    };
 
-    // this API/Function call kicks off the search and with the data,
-    // sets the state of the component to have the data 
+    // sets the state of the component to have the data
     YTSearch({key: API_KEY, term: 'squishymuffinz'}, (videos) => {
-      // SIMILAR TO: this.setState({ videos: videos })
-      this.setState({ videos });
+      this.setState({
+        videos: videos,
+        selectedVideo: videos[0]
+      });
     });
   }
 
@@ -47,8 +51,11 @@ class App extends Component {
         <Div>
           <Heading>Youtube Search</Heading>
           <SearchBar />
-          <VideoDetail video={this.state.videos[0]}/>
-          <VideoList videos={this.state.videos}/>
+          <VideoDetail video={this.state.selectedVideo}/>
+          <VideoList
+            onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+            videos={this.state.videos}
+          />
         </Div>
       </div>
     );
